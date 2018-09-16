@@ -1,34 +1,38 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+//import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  state = {
-    response: ''
-  };
+  state = { company: [], teste: [] };
 
   componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
+    this.listCompanies()
+      .then(res => res.json())
+      .then(company => this.setState({ company }))
       .catch(err => console.log(err));
   }
 
-  callApi = async () => {
-    const response = await fetch('/company/findbyid/23');
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
+  listCompanies = async () => {
+    const response = await fetch('/company/listcompanies');
+    return response;
   };
+
+  updatecompany = async () => {
+    const response = await fetch('/company/update/');
+    return response;
+  }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">{this.state.response}</p>
+        <h1>Poob Info</h1>
+        <div >
+          <h4>Companies name</h4>
+          {this.state.company.map(company =>
+            <div key={company.id}>{company.companyID},{company.name},{company.createDate}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
