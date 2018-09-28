@@ -1,4 +1,3 @@
-# poobinfo_techchallenge
 ### Installation and Configuration
 
 ##### Pre-requisite:
